@@ -31,7 +31,7 @@ export default function OtpScreen() {
     // Simulate OTP verification
     if (otp === "1234") {
       // Mock verification
-      router.replace("/(tabs)");
+      router.replace("/features/account/verificationsucess");
     } else {
       setError("Invalid verification code. Please try again.");
     }
