@@ -22,14 +22,13 @@ export default function OtpInput({
   const handleChangeText = (text: string, index: number) => {
     // Handle paste of multiple digits
     if (text.length > 1) {
-      handlePaste(text);
+      const pastedText = text.replace(/\D/g, ""); // Remove non-digits
+      handlePaste(pastedText, index);
       return;
     }
 
     // Only allow single digit
-    const digit = text.slice(-1);
-
-    if (!/^\d*$/.test(digit)) return; // Only numbers
+    const digit = text.replace(/\D/g, "").slice(-1); // Clean and get last digit
 
     const newOtp = [...otp];
     newOtp[index] = digit;
@@ -64,24 +63,27 @@ export default function OtpInput({
     }
   };
 
-  const handlePaste = (text: string) => {
+  const handlePaste = (text: string, startIndex: number = 0) => {
     // Handle paste functionality
     const digits = text.replace(/\D/g, "").slice(0, length);
-    const newOtp = new Array(length).fill("");
+    const newOtp = [...otp];
 
-    for (let i = 0; i < digits.length; i++) {
-      newOtp[i] = digits[i];
+    // Fill from the starting index
+    for (let i = 0; i < digits.length && startIndex + i < length; i++) {
+      newOtp[startIndex + i] = digits[i];
     }
 
     setOtp(newOtp);
     onChangeOtp?.(newOtp.join(""));
 
-    // Focus last filled field or next empty field
-    const focusIndex = Math.min(digits.length, length - 1);
-    refs.current[focusIndex]?.focus();
+    // Focus the field after the last pasted digit or the last field
+    const focusIndex = Math.min(startIndex + digits.length, length - 1);
+    setTimeout(() => {
+      refs.current[focusIndex]?.focus();
+    }, 10);
 
-    if (digits.length === length) {
-      onComplete?.(digits);
+    if (newOtp.join("").length === length && !newOtp.includes("")) {
+      onComplete?.(newOtp.join(""));
     }
   };
 
@@ -105,7 +107,6 @@ export default function OtpInput({
               handleKeyPress(nativeEvent.key, index)
             }
             keyboardType="numeric"
-            maxLength={1}
             textAlign="center"
             autoFocus={index === 0}
             selectTextOnFocus
