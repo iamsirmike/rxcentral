@@ -1,17 +1,17 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 
-export default function MedicationsScreen() {
+export default function AccountScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Medications</Text>
-        <Text style={styles.subtitle}>Track patient medication records</Text>
+        <Text style={styles.title}>Account</Text>
+        <Text style={styles.subtitle}>Manage your account settings</Text>
 
-        {/* We'll add medication list here later */}
+        {/* We'll add account settings here later */}
         <View style={styles.placeholder}>
           <Text style={styles.placeholderText}>
-            Medication tracking features coming soon...
+            Account management features coming soon...
           </Text>
         </View>
       </View>

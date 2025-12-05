@@ -1,17 +1,18 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function MedicationsScreen() {
+export default function PatientsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Medications</Text>
-        <Text style={styles.subtitle}>Track patient medication records</Text>
+        <Text style={styles.title}>Patients</Text>
+        <Text style={styles.subtitle}>Communicate with patients</Text>
 
-        {/* We'll add medication list here later */}
+        {/* We'll add patient list here later */}
         <View style={styles.placeholder}>
           <Text style={styles.placeholderText}>
-            Medication tracking features coming soon...
+            Patient communication features coming soon...
           </Text>
         </View>
       </View>
