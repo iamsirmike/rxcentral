@@ -5,8 +5,8 @@ export const Colors = {
 
   // Text colors
   text: {
-    primary: "#333",
-    secondary: "",
+    primary: "#000000",
+    secondary: "#9A9A9A",
     placeholder: "#999",
     white: "#fff",
     error: "#ff4444",
@@ -21,7 +21,7 @@ export const Colors = {
 
   // Border colors
   border: {
-    default: "#ddd",
+    default: "#E3E3E3",
     error: "#ff4444",
   },
 

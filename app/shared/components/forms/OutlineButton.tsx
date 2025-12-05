@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Colors } from "../../constants/colors";
 
 interface ButtonProps {
   title: string;
@@ -7,7 +8,7 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-export default function PrimaryButton({
+export default function OutlineButton({
   title,
   onPress,
   disabled,
@@ -25,7 +26,9 @@ export default function PrimaryButton({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#1D74B9",
+    backgroundColor: Colors.background.primary,
+    borderColor: "#ADADAD",
+    borderWidth: 1,
     paddingVertical: 20,
     paddingHorizontal: 25,
     borderRadius: 10,
@@ -33,11 +36,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonDisabled: {
-    backgroundColor: "#A0A0A0",
+    backgroundColor: Colors.border.default,
   },
   buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
+    color: "#7C7C7C",
+    fontSize: 18,
     fontWeight: "bold",
   },
 });

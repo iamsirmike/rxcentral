@@ -70,6 +70,10 @@ export default function RootLayout() {
           name="features/account/signup"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="features/account/otp"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />

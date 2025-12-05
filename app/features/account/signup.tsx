@@ -70,8 +70,8 @@ export default function SignUpScreen() {
 
   const onSubmit = (data: SignUpFormData) => {
     console.log(data);
-    // Navigate to main app after successful login
-    router.replace("/(tabs)");
+    // Navigate to OTP verification instead of main app
+    router.push("/features/account/otp");
   };
 
   return (
