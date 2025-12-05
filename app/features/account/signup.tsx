@@ -153,7 +153,7 @@ export default function SignUpScreen() {
               onSuffixPress={() => setShowPassword(!showPassword)}
             />
             <PrimaryButton
-              title="Sign In"
+              title="Sign Up"
               disabled={isButtonDisabled}
               onPress={handleSubmit(onSubmit)}
             />
@@ -165,7 +165,7 @@ export default function SignUpScreen() {
               style={{
                 flexDirection: "row",
                 justifyContent: "flex-end",
-                
+
                 marginTop: 10,
               }}
             >
