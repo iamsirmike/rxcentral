@@ -1,6 +1,5 @@
 import BackButton from "@/app/shared/components/backButton";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { router } from "expo-router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -79,9 +78,9 @@ export default function AddPatientScreen() {
     !phone?.trim();
 
   const onSubmit = (data: SignUpFormData) => {
-    console.log(data);
+    console.log(data.email);
     // Navigate to OTP verification instead of main app
-    router.push("/features/account/otp");
+    // router.push("/features/account/otp");
   };
 
   return (
@@ -194,6 +193,9 @@ export default function AddPatientScreen() {
               label="NOTE"
               placeholder="Additional notes"
               error={errors.note}
+              multiline
+              numberOfLines={4}
+              style={{ height: 100, textAlignVertical: "top" }}
             />
             <PrimaryButton
               title="Add Patient"

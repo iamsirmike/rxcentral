@@ -18,6 +18,7 @@ interface TextFieldProps extends TextInputProps {
   error?: FieldError;
   suffixIcon?: React.ReactNode;
   onSuffixPress?: () => void;
+  style?: any;
 }
 
 export default function TextField({
@@ -27,30 +28,38 @@ export default function TextField({
   error,
   suffixIcon,
   onSuffixPress,
+  style,
   ...textInputProps
 }: TextFieldProps) {
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
-      <Controller
-        control={control}
-        name={name}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={[styles.input, error && styles.inputError]}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholderTextColor={Colors.text.placeholder}
-            {...textInputProps}
-          />
+      <View style={styles.inputContainer}>
+        <Controller
+          control={control}
+          name={name}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={[
+                styles.input,
+                error && styles.inputError,
+                suffixIcon && styles.inputWithSuffix,
+                style,
+              ]}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholderTextColor="#999"
+              {...textInputProps}
+            />
+          )}
+        />
+        {suffixIcon && (
+          <TouchableOpacity style={styles.suffixIcon} onPress={onSuffixPress}>
+            {suffixIcon}
+          </TouchableOpacity>
         )}
-      />
-      {suffixIcon && (
-        <TouchableOpacity style={styles.suffixIcon} onPress={onSuffixPress}>
-          {suffixIcon}
-        </TouchableOpacity>
-      )}
+      </View>
       {error && <Text style={styles.errorText}>{error.message}</Text>}
     </View>
   );
@@ -67,6 +76,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     paddingHorizontal: 4,
   },
+  inputContainer: {
+    position: "relative",
+  },
   input: {
     borderWidth: 1,
     borderColor: Colors.border.default,
@@ -79,6 +91,9 @@ const styles = StyleSheet.create({
   },
   inputError: {
     borderColor: Colors.border.error,
+  },
+  inputWithSuffix: {
+    paddingRight: 40,
   },
   errorText: {
     fontSize: 14,
