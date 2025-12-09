@@ -1,21 +1,21 @@
-import { Ionicons } from "@expo/vector-icons";
+import BackButton from "@/app/shared/components/backButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Dimensions,
-  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { z } from "zod";
+import BottomSheetSelect from "../../shared/components/forms/BottomSheetSelect";
+import DatePicker from "../../shared/components/forms/DatePicker";
 import PrimaryButton from "../../shared/components/forms/PrimaryButton";
 import TextField from "../../shared/components/forms/TextField";
 import { Colors } from "../../shared/constants/colors";
@@ -28,15 +28,18 @@ const signupSchema = z.object({
     .string()
     .min(1, "Email is required")
     .email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  branch: z.string().min(1, "Branch is required"),
-  pharmacyName: z.string().min(1, "Pharmacy Name is required"),
+  address: z.string().min(1, "Address is required"),
+  firstName: z.string().min(1, "First Name is required"),
+  lastName: z.string().min(1, "Last Name is required"),
+  dateOfBirth: z.string().min(1, "Date of Birth is required"),
+  gender: z.string().min(1, "Gender is required"),
   phone: z.string().min(10, "Phone number must be at least 10 characters"),
+  note: z.string().optional(),
 });
 
 type SignUpFormData = z.infer<typeof signupSchema>;
 
-export default function SignUpScreen() {
+export default function AddPatientScreen() {
   const {
     control,
     handleSubmit,
@@ -46,10 +49,13 @@ export default function SignUpScreen() {
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: "",
-      password: "",
-      branch: "",
-      pharmacyName: "",
+      address: "",
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      gender: "",
       phone: "",
+      note: "",
     },
   });
 
@@ -57,15 +63,19 @@ export default function SignUpScreen() {
 
   // Watch form values to determine if button should be disabled
   const email = watch("email");
-  const password = watch("password");
-  const branch = watch("branch");
-  const pharmacyName = watch("pharmacyName");
+  const address = watch("address");
+  const firstName = watch("firstName");
+  const lastName = watch("lastName");
+  const dateOfBirth = watch("dateOfBirth");
+  const gender = watch("gender");
   const phone = watch("phone");
   const isButtonDisabled =
     !email?.trim() ||
-    !password?.trim() ||
-    !branch?.trim() ||
-    !pharmacyName?.trim() ||
+    !address?.trim() ||
+    !firstName?.trim() ||
+    !lastName?.trim() ||
+    !dateOfBirth?.trim() ||
+    !gender?.trim() ||
     !phone?.trim();
 
   const onSubmit = (data: SignUpFormData) => {
@@ -76,6 +86,7 @@ export default function SignUpScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BackButton />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardView}
@@ -86,36 +97,78 @@ export default function SignUpScreen() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          <Image
-            source={require("../../../assets/images/logocolored.png")}
-            style={styles.logo}
-          />
-          <Text style={styles.header}>Create your account</Text>
-          <Text style={styles.subtitle}>
-            Providing these details will allow you access Qyeron services.
-          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 30,
+            }}
+          >
+            <Text style={styles.header}>New patient</Text>
+            <Text style={styles.subtitle}>QID232760</Text>
+          </View>
 
           <View style={styles.formContainer}>
-            <TextField
-              name="pharmacyName"
-              control={control}
-              label="PHARMACY NAME"
-              placeholder="E.g Mikeys Pharmacy"
-              error={errors.pharmacyName}
-              autoCapitalize="none"
-              keyboardType="default"
-            />
+            <View style={styles.row}>
+              <View style={styles.halfWidth}>
+                <TextField
+                  name="firstName"
+                  control={control}
+                  label="FIRST NAME"
+                  placeholder="E.g John"
+                  error={errors.firstName}
+                  autoCapitalize="words"
+                  keyboardType="default"
+                />
+              </View>
+              <View style={styles.halfWidth}>
+                <TextField
+                  name="lastName"
+                  control={control}
+                  label="LAST NAME"
+                  placeholder="E.g Doe"
+                  error={errors.lastName}
+                  autoCapitalize="words"
+                  keyboardType="default"
+                />
+              </View>
+            </View>
+
+            <View style={styles.row}>
+              <View style={styles.halfWidth}>
+                <DatePicker
+                  name="dateOfBirth"
+                  control={control}
+                  label="DATE OF BIRTH"
+                  placeholder="Select date"
+                  error={errors.dateOfBirth}
+                />
+              </View>
+              <View style={styles.halfWidth}>
+                <BottomSheetSelect
+                  name="gender"
+                  control={control}
+                  label="GENDER"
+                  placeholder="Select gender"
+                  error={errors.gender}
+                  items={[
+                    { label: "Male", value: "male" },
+                    { label: "Female", value: "female" },
+                    { label: "Other", value: "other" },
+                  ]}
+                />
+              </View>
+            </View>
 
             <TextField
-              name="branch"
+              name="phone"
               control={control}
-              label="BRANCH LOCATION"
-              placeholder="E.g East Legon"
-              error={errors.branch}
-              autoCapitalize="none"
-              keyboardType="default"
+              label="MOBILE"
+              placeholder="E.g 0551806886"
+              error={errors.phone}
+              keyboardType="phone-pad"
             />
-
             <TextField
               name="email"
               control={control}
@@ -128,53 +181,27 @@ export default function SignUpScreen() {
             />
 
             <TextField
-              name="phone"
+              name="address"
               control={control}
-              label="PHONE NUMBER"
-              placeholder="E.g 0551806886"
-              error={errors.phone}
-              keyboardType="phone-pad"
+              label="ADDRESS"
+              placeholder="E.g 123 Main St"
+              error={errors.address}
             />
 
             <TextField
-              name="password"
+              name="note"
               control={control}
-              label="PASSWORD"
-              placeholder="*********"
-              error={errors.password}
-              secureTextEntry={!showPassword}
-              suffixIcon={
-                <Ionicons
-                  name={showPassword ? "eye-off" : "eye"}
-                  size={24}
-                  color="#999"
-                />
-              }
-              onSuffixPress={() => setShowPassword(!showPassword)}
+              label="NOTE"
+              placeholder="Additional notes"
+              error={errors.note}
             />
             <PrimaryButton
-              title="Sign Up"
+              title="Add Patient"
               isLoading={false}
               disabled={isButtonDisabled}
               onPress={handleSubmit(onSubmit)}
             />
           </View>
-
-          <Text style={styles.noaccountText}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => router.dismiss()}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-
-                marginTop: 10,
-              }}
-            >
-              <Text style={styles.signup}>Sign In</Text>
-              <View style={{ width: 10 }}></View>
-              <Ionicons name="arrow-forward" size={24} color={Colors.primary} />
-            </View>
-          </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -198,16 +225,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: Fonts.lato.bold,
     color: Colors.text.primary,
-    paddingTop: 30,
   },
   subtitle: {
     fontSize: 16,
     fontFamily: Fonts.lato.regular,
     color: Colors.text.secondary,
-    paddingTop: 10,
   },
   formContainer: {
     paddingTop: 30,
+  },
+  row: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  halfWidth: {
+    flex: 1,
   },
   loginButton: {
     backgroundColor: Colors.primary,

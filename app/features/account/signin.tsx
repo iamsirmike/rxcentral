@@ -48,6 +48,7 @@ export default function SignInScreen() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Watch form values to determine if button should be disabled
   const email = watch("email");
@@ -56,8 +57,18 @@ export default function SignInScreen() {
 
   const onSubmit = (data: LoginFormData) => {
     console.log(data);
-    // Navigate to main app after successful login
-    // router.replace("/(tabs)");
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      // Navigate to main app after successful login
+      if (
+        data.email == "asamoahmichael77@gmail.com" &&
+        data.password == "123456"
+      ) {
+        router.replace("/(tabs)");
+      }
+    }, 3000);
   };
 
   return (
@@ -113,6 +124,7 @@ export default function SignInScreen() {
 
             <PrimaryButton
               title="Sign In"
+              isLoading={isLoading}
               // disabled={isButtonDisabled}
               onPress={handleSubmit(onSubmit)}
             />

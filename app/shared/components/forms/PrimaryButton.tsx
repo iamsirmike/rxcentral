@@ -1,24 +1,46 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  DimensionValue,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import { Colors } from "../../constants/colors";
 
 interface ButtonProps {
   title: string;
-  onPress: () => void;
+  isLoading: boolean;
   disabled?: boolean;
+  width?: DimensionValue;
+  height?: DimensionValue;
+  onPress: () => void;
 }
 
 export default function PrimaryButton({
   title,
-  onPress,
+  isLoading,
   disabled,
+  width,
+  height,
+  onPress,
 }: ButtonProps) {
   return (
     <TouchableOpacity
-      style={[styles.button, disabled && styles.buttonDisabled]}
+      style={[
+        styles.button,
+        disabled && styles.buttonDisabled,
+        width != null ? { width: width as DimensionValue } : undefined,
+        height != null ? { height: height as DimensionValue } : undefined,
+      ]}
       onPress={!disabled ? onPress : undefined}
       disabled={disabled}
     >
-      <Text style={styles.buttonText}>{title}</Text>
+      {isLoading ? (
+        <ActivityIndicator color={Colors.background.white} />
+      ) : (
+        <Text style={styles.buttonText}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 }
@@ -31,6 +53,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 20,
+    flex: 1,
+  },
+  buttonWidth: {
+    width: "50%",
+  },
+  buttonHeight: {
+    height: 50,
   },
   buttonDisabled: {
     backgroundColor: "#A0A0A0",

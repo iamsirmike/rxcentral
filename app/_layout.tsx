@@ -78,6 +78,10 @@ export default function RootLayout() {
           name="features/account/verificationsucess"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="features/pmr/addPatient"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />

@@ -1,21 +1,35 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  DimensionValue,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { Colors } from "../../constants/colors";
 
 interface ButtonProps {
   title: string;
+  height?: DimensionValue;
+  width?: DimensionValue;
   onPress: () => void;
   disabled?: boolean;
 }
 
 export default function OutlineButton({
   title,
+  height,
+  width,
   onPress,
   disabled,
 }: ButtonProps) {
   return (
     <TouchableOpacity
-      style={[styles.button, disabled && styles.buttonDisabled]}
+      style={[
+        styles.button,
+        disabled && styles.buttonDisabled,
+        width != null ? { width: width as DimensionValue } : undefined,
+        height != null ? { height: height as DimensionValue } : undefined,
+      ]}
       onPress={!disabled ? onPress : undefined}
       disabled={disabled}
     >
