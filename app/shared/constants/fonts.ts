@@ -12,3 +12,5 @@ export const Fonts = {
     blackItalic: "Lato_900Black_Italic",
   },
 };
+
+export default Fonts;

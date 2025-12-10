@@ -1,5 +1,7 @@
 import BackButton from "@/app/shared/components/backButton";
+import OutlineButton from "@/app/shared/components/forms/OutlineButton";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -17,12 +19,13 @@ import BottomSheetSelect from "../../shared/components/forms/BottomSheetSelect";
 import DatePicker from "../../shared/components/forms/DatePicker";
 import PrimaryButton from "../../shared/components/forms/PrimaryButton";
 import TextField from "../../shared/components/forms/TextField";
-import { Colors } from "../../shared/constants/colors";
+import Colors from "../../shared/constants/colors";
 import { Fonts } from "../../shared/constants/fonts";
+import { usePmr } from "./Provider/pmrProvider";
 
 const { width, height } = Dimensions.get("window");
 
-const signupSchema = z.object({
+const addPatientSchema = z.object({
   email: z
     .string()
     .min(1, "Email is required")
@@ -36,16 +39,19 @@ const signupSchema = z.object({
   note: z.string().optional(),
 });
 
-type SignUpFormData = z.infer<typeof signupSchema>;
+type AddPatientFormData = z.infer<typeof addPatientSchema>;
 
 export default function AddPatientScreen() {
+  const { addPatient } = usePmr();
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     control,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<SignUpFormData>({
-    resolver: zodResolver(signupSchema),
+  } = useForm<AddPatientFormData>({
+    resolver: zodResolver(addPatientSchema),
     defaultValues: {
       email: "",
       address: "",
@@ -57,8 +63,6 @@ export default function AddPatientScreen() {
       note: "",
     },
   });
-
-  const [showPassword, setShowPassword] = useState(false);
 
   // Watch form values to determine if button should be disabled
   const email = watch("email");
@@ -77,10 +81,14 @@ export default function AddPatientScreen() {
     !gender?.trim() ||
     !phone?.trim();
 
-  const onSubmit = (data: SignUpFormData) => {
+  const onSubmit = (data: AddPatientFormData) => {
     console.log(data.email);
     // Navigate to OTP verification instead of main app
-    // router.push("/features/account/otp");
+    addPatient(JSON.parse(JSON.stringify(data)));
+    // router.push({
+    //   pathname: "/features/pmr/prescriptions",
+    //   params: data,
+    // });
   };
 
   return (
@@ -197,12 +205,27 @@ export default function AddPatientScreen() {
               numberOfLines={4}
               style={{ height: 100, textAlignVertical: "top" }}
             />
-            <PrimaryButton
-              title="Add Patient"
-              isLoading={false}
-              disabled={isButtonDisabled}
-              onPress={handleSubmit(onSubmit)}
-            />
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 12,
+                marginHorizontal: 20,
+              }}
+            >
+              <OutlineButton
+                title="Back"
+                onPress={() => {
+                  router.dismiss();
+                }}
+                width={"50%"}
+              />
+              <PrimaryButton
+                title="Next"
+                isLoading={false}
+                onPress={handleSubmit(onSubmit)}
+                width={"50%"}
+              />
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import OtpInput from "../../shared/components/forms/OtpInput";
-import { Colors } from "../../shared/constants/colors";
+import Colors from "../../shared/constants/colors";
 import { Fonts } from "../../shared/constants/fonts";
 
 export default function OtpScreen() {

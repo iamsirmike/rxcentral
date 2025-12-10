@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { Colors } from "../../constants/colors";
+import Colors from "../../constants/colors";
 
 interface ButtonProps {
   title: string;
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 20,
-    flex: 1,
+    // flex: 1,
   },
   buttonWidth: {
     width: "50%",

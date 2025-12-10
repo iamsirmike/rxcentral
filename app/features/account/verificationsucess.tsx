@@ -1,4 +1,4 @@
-import { Colors } from "@/app/shared/constants/colors";
+import Colors from "@/app/shared/constants/colors";
 import { Fonts } from "@/app/shared/constants/fonts";
 import { router } from "expo-router";
 import React, { useEffect } from "react";

@@ -2,7 +2,7 @@ import React from "react";
 import { Control, Controller, FieldError } from "react-hook-form";
 import { StyleSheet, Text, View } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
-import { Colors } from "../../constants/colors";
+import Colors from "../../constants/colors";
 import { Fonts } from "../../constants/fonts";
 
 interface DropdownProps {

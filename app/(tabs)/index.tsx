@@ -11,16 +11,18 @@ import {
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { SafeAreaView } from "react-native-safe-area-context";
-import patients from "../features/dummyData";
+// import patients from "../features/dummyData";
+import { usePmr } from "../features/pmr/Provider/pmrProvider";
 import PrimaryButton from "../shared/components/forms/PrimaryButton";
 import HomeCard from "../shared/components/homeCard";
 import NotificationAlert from "../shared/components/notificationAlert";
 import PatientCard from "../shared/components/patientCard";
-import { Colors } from "../shared/constants/colors";
+import Colors from "../shared/constants/colors";
 import { Fonts } from "../shared/constants/fonts";
 
 export default function MedicationsScreen() {
   const [showAlert, setShowAlert] = useState(true);
+  const { patients } = usePmr();
 
   const shouldCloseAlert = () => {
     setShowAlert(false);
@@ -123,19 +125,21 @@ export default function MedicationsScreen() {
         marginTop: 20,
         gap: 10,
         paddingBottom: 30,
+        alignContent: "center",
+        justifyContent: "center",
       }}
     >
       <PrimaryButton
         title="New RX"
         onPress={() => console.log("New RX pressed")}
         isLoading={false}
-        width={40}
+        width={"50%"}
       />
       <PrimaryButton
         title="New Patient"
         onPress={() => router.push("../features/pmr/addPatient")}
         isLoading={false}
-        width={40}
+        width={"50%"}
       />
     </View>
   );
@@ -146,11 +150,13 @@ export default function MedicationsScreen() {
         data={patients}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <PatientCard
-            name={item.name}
-            prescription={item.prescription}
-            onTap={() => console.log(item.name)}
-          />
+          <View style={{ marginRight: 20 }}>
+            <PatientCard
+              name={item.firstName + " " + item.lastName}
+              prescription={item.phone}
+              onTap={() => console.log(item.firstName + " " + item.lastName)}
+            />
+          </View>
         )}
         ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}

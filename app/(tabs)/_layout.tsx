@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
-import { Colors } from "../shared/constants/colors";
+import Colors from "../shared/constants/colors";
 import { Fonts } from "../shared/constants/fonts";
 
 export default function TabLayout() {

@@ -1,7 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { Colors } from "../constants/colors";
+import Colors from "../constants/colors";
 
 const { width, height } = Dimensions.get("window");
 

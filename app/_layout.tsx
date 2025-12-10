@@ -21,6 +21,7 @@ import * as SplashScreenExpo from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
+import { PmrProvider } from "./features/pmr/Provider/pmrProvider";
 import SplashScreen from "./shared/components/SplashScreen";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete
@@ -61,30 +62,40 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name="features/account/signin"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="features/account/signup"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="features/account/otp"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="features/account/verificationsucess"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="features/pmr/addPatient"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-      <StatusBar style="auto" />
+      <PmrProvider>
+        <Stack>
+          <Stack.Screen
+            name="features/account/signin"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="features/account/signup"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="features/account/otp"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="features/account/verificationsucess"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="features/pmr/addPatient"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="features/pmr/prescriptions"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="features/pmr/addPrescription"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </PmrProvider>
     </ThemeProvider>
   );
 }

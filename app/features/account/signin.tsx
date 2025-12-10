@@ -18,7 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { z } from "zod";
 import PrimaryButton from "../../shared/components/forms/PrimaryButton";
 import TextField from "../../shared/components/forms/TextField";
-import { Colors } from "../../shared/constants/colors";
+import Colors from "../../shared/constants/colors";
 import { Fonts } from "../../shared/constants/fonts";
 
 const { width, height } = Dimensions.get("window");

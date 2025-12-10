@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Colors } from "../../constants/colors";
+import Colors from "../../constants/colors";
 import { Fonts } from "../../constants/fonts";
 
 interface TextFieldProps extends TextInputProps {
@@ -104,6 +104,6 @@ const styles = StyleSheet.create({
   suffixIcon: {
     position: "absolute",
     right: 16,
-    top: 45,
+    top: 15,
   },
 });

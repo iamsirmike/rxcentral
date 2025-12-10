@@ -6,13 +6,13 @@ import { Fonts } from "../constants/fonts";
 
 interface PatientCardProps {
   name: string;
-  prescription: string;
+  quantity: string;
   onTap?: () => void;
 }
 
-export default function PatientCard({
+export default function PrescriptionCard({
   name,
-  prescription,
+  quantity,
   onTap,
 }: PatientCardProps) {
   return (
@@ -20,7 +20,7 @@ export default function PatientCard({
       <View style={[styles.container]}>
         <View>
           <Text style={styles.nameText}>{name}</Text>
-          <Text style={styles.prescriptionText}>{prescription}</Text>
+          <Text style={styles.prescriptionText}>{quantity}</Text>
         </View>
         <Ionicons name="chevron-forward" size={20} color={"#1D74B973"} />
       </View>

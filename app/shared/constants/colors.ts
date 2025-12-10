@@ -1,4 +1,4 @@
-export const Colors = {
+const Colors = {
   // Primary brand colors
   primary: "#1D74B9",
   secondary: "#62B750",
@@ -45,3 +45,5 @@ export const Colors = {
     textDisabled: "#999",
   },
 };
+
+export default Colors;
